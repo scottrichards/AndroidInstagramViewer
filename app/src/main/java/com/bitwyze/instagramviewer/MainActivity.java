@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                                 photo.likes = photoJSON.getJSONObject("likes").getString("count");
                                 photo.imageUrl = photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getString("url");
                                 photo.imageHeight = photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getInt("height");
+                                photo.userImageUrl = photoJSON.getJSONObject("user").getString("profile_picture");
                                 photos.add(photo);
                             }
                         } catch (JSONException e) {
