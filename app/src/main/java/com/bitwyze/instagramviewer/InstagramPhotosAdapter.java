@@ -29,6 +29,8 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         TextView tvCaption = (TextView)convertView.findViewById(R.id.caption);
         ImageView ivPhoto = (ImageView)convertView.findViewById(R.id.imageView);
         TextView tvLikes = (TextView)convertView.findViewById(R.id.likes);
+        TextView tvUserName = (TextView)convertView.findViewById(R.id.username);
+        tvUserName.setText(photo.username);
         tvLikes.setText(photo.likes);
         tvCaption.setText(photo.caption);
         ivPhoto.setImageResource(0);

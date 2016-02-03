@@ -85,7 +85,10 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < photosJSON.length(); i++) {
                                 JSONObject photoJSON = photosJSON.getJSONObject(i);
                                 InstagramPhoto photo = new InstagramPhoto();
-                                photo.username = photoJSON.getJSONObject("user").getString("username");
+                                photo.username = photoJSON.getJSONObject("user").getString("full_name");
+                                if (photo.username.length() == 0) {
+                                    photo.username = photoJSON.getJSONObject("user").getString("username");
+                                }
                                 photo.caption = photoJSON.getJSONObject("caption").getString("text");
                                 photo.likes = photoJSON.getJSONObject("likes").getString("count");
                                 photo.imageUrl = photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getString("url");
