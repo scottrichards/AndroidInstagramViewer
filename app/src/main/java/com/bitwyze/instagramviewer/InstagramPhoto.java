@@ -6,6 +6,7 @@ package com.bitwyze.instagramviewer;
 public class InstagramPhoto {
     public String username;
     public String caption;
+    public String likes;
     public String imageUrl;
     public int imageHeight;
     public int likeCount;
