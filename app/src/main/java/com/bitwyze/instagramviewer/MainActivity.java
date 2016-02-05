@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -27,12 +28,24 @@ public class MainActivity extends AppCompatActivity {
     public static final String CLIENT_ID = "93b747190177459d95061ae86c0535f1";
     private ArrayList<InstagramPhoto> photos;
     private InstagramPhotosAdapter aPhotos;
+    private AsyncHttpClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout)findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                                                @Override
+                                                public void onRefresh() {
+                                                    photos.clear(); // clear out existing photos
+                                                    fetchPopularPhotos();
+                                                    swipeContainer.setRefreshing(false);
+                                                }
+                                            }
+
+        );
         setSupportActionBar(toolbar);
         photos = new ArrayList<>();
         aPhotos = new InstagramPhotosAdapter(this, photos);
@@ -50,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     public void fetchPopularPhotos()
     {
         String url = "https://api.instagram.com/v1/media/popular?client_id=" + CLIENT_ID;
-        AsyncHttpClient client = new AsyncHttpClient();
+        client = new AsyncHttpClient();
         client.get(url,null, new JsonHttpResponseHandler() {
                     @Override public void onSuccess(int statusCode,Header[] headers, JSONObject response) {
                         JSONArray photosJSON = null;
