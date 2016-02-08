@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,11 +58,23 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         }
     }
 
-//    private String formatTime(long createTime)
-//    {
-//
-//    }
+    // return a string representing how long ago the createTime parameter timestamp in milliseconds is from now
+    // if the createTime is in the past then it trims off the "ago, 3:30pm" so it would return a string like:
+    // 1 hr.  or 52 min.
+    private String formatRelativeTime(long createTime)
+    {
+        String relativeTime =  (String)DateUtils.getRelativeDateTimeString(context, createTime, DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
+        int lastIndexOfAgo = relativeTime.indexOf("ago");
+        if (lastIndexOfAgo > 0 ) {
+            String result = relativeTime.substring(0, lastIndexOfAgo);
+            Log.d("instagram", "result: " + result);
+            return(result);
+        } else {
+            return relativeTime;
+        }
+    }
 
+    // Return the corresponding View with an Instagram entry for the Give position
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         InstagramPhoto photo = getItem(position);
@@ -74,15 +87,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         TextView tvLikes = (TextView)convertView.findViewById(R.id.likes);
         TextView tvUserName = (TextView)convertView.findViewById(R.id.username);
         TextView tvCreateTime = (TextView)convertView.findViewById(R.id.createTime);
-        Date createDate = new Date(photo.createTime * 1000L);
-        Date now = new Date();
-        long nowInMillis = now.getTime();
-        String relativeTime =  (String)DateUtils.getRelativeDateTimeString(context, photo.createTime * 1000L, DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
-        String relatimteTimeSpan = (String)DateUtils.getRelativeTimeSpanString(context,photo.createTime * 1000L);
-        Calendar calendar = Calendar.getInstance();
-        long nowCalendar = calendar.getTimeInMillis();
-        //String relativeTime = DateUtils.getRelativeTimeSpanString(createDate, DateUtils.SECOND_IN_MILLIS, DateUtils.WEEK_IN_MILLIS);
-       // tvCreateTime.setText(convertTimeToDate(photo.createTime));
+        String relativeTime = formatRelativeTime(photo.createTime * 1000L);
         tvCreateTime.setText(relativeTime);
         tvUserName.setText(photo.username);
         tvLikes.setText(formatter.format(photo.likeCount));
