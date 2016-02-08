@@ -57,10 +57,10 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         }
     }
 
-    private String formatTime(long createTime)
-    {
-
-    }
+//    private String formatTime(long createTime)
+//    {
+//
+//    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
