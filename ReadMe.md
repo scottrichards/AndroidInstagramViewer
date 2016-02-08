@@ -36,13 +36,13 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+GIF created with [LiceCap](https://github.com/scottrichards/AndroidInstagramViewer/blob/master/InstagramViewer.gif).
 
 ## Notes
 
 Describe any challenges encountered while building the app.
 
-I was surprised at how easy it was to add the rounded image library (although you get this functionality built into iOS). Also the 
+I was surprised at how easy it was to add the rounded image library (although you get this functionality built into iOS). Also sepcifying a loading image was really straighforward with Picasso.
 
 ## Open-source libraries used
 
